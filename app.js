@@ -1,8 +1,9 @@
 import "dotenv/config";
 import express from "express";
-import session from "./config/session";
+import session from "./config/session.js";
 import morgan from "morgan";
-import passport from "./config/passport";
+import passport from "./config/passport.js";
+import authRouter from "./routers/auth.router.js";
 
 const app = express();
 
