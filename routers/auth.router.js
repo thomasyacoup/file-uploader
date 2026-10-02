@@ -11,5 +11,6 @@ authRouter.post("/signup", signupValidator, controller.signup);
 
 authRouter.get("/login", controller.getLoginPage);
 authRouter.post("/login", loginValidator, controller.login);
+authRouter.get("/logout", controller.logout);
 
 export default authRouter;

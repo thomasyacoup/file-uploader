@@ -61,6 +61,14 @@ class AuthController {
       next(e);
     }
   }
+
+  async logout(req, res, next) {
+    try {
+      req.logout((e) => (e ? next(e) : res.redirect("/")));
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export default AuthController;
