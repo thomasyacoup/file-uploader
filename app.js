@@ -11,7 +11,11 @@ app.use(session);
 app.use(morgan());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.set("view engine", "ejs");
+
+app.use("", authRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("The app is running on:", process.env.PORT);
