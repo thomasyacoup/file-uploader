@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>signup</title>
+</head>
+<body>
+	<% if (errors) { %>
+  	<ul>
+  		<% for (let error of errors) { %>
+  			<li><%= error.msg %></li>
+  		<% } %>
+  	</ul>
+	<% } %>
+	<form action="/signup" method="post">
+	 <input type="text" name="username" value="<%= oldInput?.username %>">
+	 <input type="password" name="password" value="<%= oldInput?.password %>">
+		<input type="password" name="confirm_password" value="<%= oldInput?.confirm_password %>">
+	 <input type="submit" value="Sign Up">
+	</form>
+</body>
+</html>
