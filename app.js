@@ -17,6 +17,8 @@ app.set("view engine", "ejs");
 
 app.use("", authRouter);
 
+app.get("/", (req, res) => res.render("index", { req }));
+
 app.listen(process.env.PORT, () => {
   console.log("The app is running on:", process.env.PORT);
 });
