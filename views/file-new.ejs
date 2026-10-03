@@ -7,6 +7,7 @@
 </head>
 <body>
 	<form action="/file/new" method="post" enctype="multipart/form-data">
+	  <input type="hidden" name="folder" value="<%= folder %>">
 		<input type="file" name="file" placeholder="file" value="<%= oldInput?.file %>">
 		<button type="submit">Upload</button>
 	</form>
