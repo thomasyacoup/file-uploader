@@ -4,6 +4,8 @@ import session from "./config/session.js";
 import morgan from "morgan";
 import passport from "./config/passport.js";
 import authRouter from "./routers/auth.router.js";
+import fileRouter from "./routers/file.router.js";
+import protectedRoute from "./middleware/protectedRoute.js";
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.use("", authRouter);
+app.use("/file", protectedRoute, fileRouter);
 
 app.get("/", (req, res) => res.render("index", { req }));
 
