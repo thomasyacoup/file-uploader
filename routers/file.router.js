@@ -9,4 +9,6 @@ const controller = new FileController();
 fileRouter.get("/new", uploadFileValidator, controller.getUploadPage);
 fileRouter.post("/new", upload.single("file"), controller.uploadFile);
 
+fileRouter.get("/:id", controller.getFilePage);
+fileRouter.get("/:id/download", controller.downloadFile);
 export default fileRouter;
