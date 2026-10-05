@@ -10,10 +10,27 @@
 		<h1>Welcome, <%= req.user.username %>!</h1>
 		<a href="/logout"><button>Logout</button></a>
 		<a href="/file/new"><button>Upload File</button></a>
+		<a href="/folder/new"><button>Create Folder</button></a>
 	<% } else { %>
 		<h1>Welcome to the app</h1>
 		<a href="/signup">Sign Up</a> |
 		<a href="/login">Login</a>
+	<% } %>
+
+	<% if (req.isAuthenticated()) { %>
+		<h2>Your Folders</h2>
+		<ul>
+			<% for (let folder of req.user.folders) { %>
+				<li><a href="/folder/<%= folder.id %>"><%= folder.name %></a></li>
+			<% } %>
+		</ul>
+
+		<h2>root Files</h2>
+		<ul>
+			<% for (let file of req.user.files) { %>
+				<li><a href="/file/<%= file.id %>"><%= file.name %></a></li>
+			<% } %>
+		</ul>
 	<% } %>
 </body>
 </html>

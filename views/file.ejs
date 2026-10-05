@@ -10,8 +10,8 @@
   <a href="/"><button>Back</button></a>
   <ul>
     <li>upload date: <%= file.createdAt %></li>
-    <li>size: <%= file.size / 1024n / 1024n %>MB</li>
-    <li>folder: <%= file.folder ? file.folder : "root" %></li>
+    <li>size: <%= Number(file.size) / 1024 %>KB</li>
+    <li>folder: <%= file.folder ? file.folder.name : "root" %></li>
   </ul>
   <form action="/file/<%= file.id %>/delete" method="get"><button>Delete</button></form>
   <form action="/file/<%= file.id %>/download" method="get"><button>Download</button></form>

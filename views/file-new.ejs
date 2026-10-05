@@ -6,8 +6,16 @@
 	<title>upload file</title>
 </head>
 <body>
+  <% if (errors) { %>
+    <ul>
+      <% errors.forEach((error) => { %>
+      <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
 	<form action="/file/new" method="post" enctype="multipart/form-data">
-	  <input type="hidden" name="folder" value="<%= folder %>">
+	  <input type="hidden" name="folderId" value="<%= folder %>">
 		<input type="file" name="file" placeholder="file" value="<%= oldInput?.file %>">
 		<button type="submit">Upload</button>
 	</form>
