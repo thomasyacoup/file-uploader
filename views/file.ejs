@@ -4,16 +4,83 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><%= file.name %></title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 20px;
+		}
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			padding: 20px;
+		}
+		h1 {
+			margin-top: 0;
+			font-size: 22px;
+			color: #333;
+		}
+		.card {
+			background: #fff;
+			border-radius: 6px;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+			padding: 16px;
+			margin-bottom: 16px;
+		}
+		.actions {
+			display: flex;
+			gap: 10px;
+			margin-top: 10px;
+		}
+		button {
+			background: #007bff;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+		}
+		button:hover {
+			background: #0056b3;
+		}
+		.button {
+			display: inline-block;
+			text-decoration: none;
+			background: #6c757d;
+			color: white;
+			padding: 8px 16px;
+			border-radius: 4px;
+			font-size: 14px;
+		}
+		.button:hover {
+			background: #5a6268;
+		}
+	</style>
 </head>
 <body>
-  <h3><%= file.name %></h3>
-  <a href="/"><button>Back</button></a>
-  <ul>
-    <li>upload date: <%= file.createdAt %></li>
-    <li>size: <%= Number(file.size) / 1024 %>KB</li>
-    <li>folder: <%= file.folder ? file.folder.name : "root" %></li>
-  </ul>
-  <form action="/file/<%= file.id %>/delete" method="get"><button>Delete</button></form>
-  <form action="/file/<%= file.id %>/download" method="get"><button>Download</button></form>
+	<div class="container">
+		<a href="/" class="button back">Back</a>
+		<div class="card">
+			<h1><%= file.name %></h1>
+			<ul>
+				<li>Upload date: <%= file.createdAt %></li>
+				<li>Size: <%= Number(file.size) / 1024 %>KB</li>
+				<li>Folder: <%= file.folder ? file.folder.name : "root" %></li>
+			</ul>
+			<div class="actions">
+				<form action="/file/<%= file.id %>/delete" method="get" style="display: inline;">
+					<button>Delete</button>
+				</form>
+				<form action="/file/<%= file.id %>/download" method="get" style="display: inline;">
+					<button>Download</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

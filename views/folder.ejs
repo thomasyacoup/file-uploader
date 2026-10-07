@@ -4,34 +4,150 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>folder <%= folder.name %></title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 20px;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			padding: 20px;
+		}
+		nav {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+		nav a, nav button {
+			text-decoration: none;
+			background: #007bff;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+		}
+		nav a:hover, nav button:hover {
+			background: #0056b3;
+		}
+		.card {
+			background: #fff;
+			border-radius: 6px;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+			padding: 16px;
+			margin-bottom: 16px;
+		}
+		.card h1 {
+			margin-top: 0;
+			font-size: 24px;
+			color: #333;
+		}
+		.card h2 {
+			margin-top: 0;
+			font-size: 20px;
+			color: #333;
+		}
+		.card p {
+			color: #666;
+			margin-bottom: 0;
+		}
+		.card ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.card li {
+			padding: 8px 0;
+			border-bottom: 1px solid #eee;
+		}
+		.card li:last-child {
+			border-bottom: none;
+		}
+		.card a {
+			text-decoration: none;
+			color: #007bff;
+		}
+		.card a:hover {
+			text-decoration: underline;
+		}
+		.actions {
+			display: flex;
+			gap: 10px;
+			margin-top: 10px;
+		}
+		.actions button, .actions a {
+			text-decoration: none;
+			background: #007bff;
+			color: white;
+			border: none;
+			padding: 6px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 13px;
+		}
+		.actions button:hover, .actions a:hover {
+			background: #0056b3;
+		}
+		.share-link {
+			word-break: break-all;
+		}
+	</style>
 </head>
 <body>
-  <h1>
-    <%= folder.name %>
-  </h1>
-  <p><%= folder.createdAt %></p>
-  <button type="button">
-    <a href="/file/new?folderId=<%= folder.id %>">upload file</a>
-  </button>
-  <form action="/folder/<%= folder.id %>/share" method="post">
-    <input type="submit" value="Share">
-  </form>
-  <ul>
-    <% for (let file of folder.files) { %>
-    <li>
-      <%= file.name %>
-      <a href="/file/<%= file.id %>">View</a>
-    </li>
-    <% } %>
-  </ul>
+	<div class="container">
+		<nav>
+			<a href="/">Home</a>
+			<a href="/file/new">Upload File</a>
+			<a href="/folder/new">Create Folder</a>
+			<a href="/logout">Logout</a>
+		</nav>
 
-  <ul>
-    Share Links
-    <% for (let link of folder.shareLinks) {%>
-      <li>
-        <a href="<%= req.headers.host+ '/share/' + link.id %>"><%= req.headers.host+ '/share/' + link.id %></a> (<%= link.expiresAt < Date.now() ? 'expired' : 'active for ' + Math.ceil((link.expiresAt - Date.now()) / 1000 / 60 / 60)  + 'H' %>)
-      </li>
-    <%}%>
-  </ul>
+		<div class="card">
+			<h1><%= folder.name %></h1>
+			<p>Created: <%= folder.createdAt %></p>
+			<div class="actions">
+				<a href="/file/new?folderId=<%= folder.id %>">Upload File</a>
+				<form action="/folder/<%= folder.id %>/share" method="post" style="display: inline;">
+					<button type="submit">Share Folder</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="card">
+			<h2>Files</h2>
+			<ul>
+				<% for (let file of folder.files) { %>
+					<li>
+						<a href="/file/<%= file.id %>"><%= file.name %></a>
+						<div class="actions">
+							<a href="/file/<%= file.id %>">View</a>
+							<a href="/file/<%= file.id %>/download">Download</a>
+						</div>
+					</li>
+				<% } %>
+			</ul>
+		</div>
+
+		<div class="card">
+			<h2>Share Links</h2>
+			<ul>
+				<% for (let link of folder.shareLinks) { %>
+					<li>
+						<a href="<%= 'http://' + req.headers.host + '/share/' + link.id %>" class="share-link">
+							<%= req.headers.host + '/share/' + link.id %>
+						</a>
+						<%= link.expiresAt < Date.now() ? ' (expired)' : ' (active for ' + Math.ceil((link.expiresAt - Date.now()) / 1000 / 60 / 60) + 'H)' %>
+					</li>
+				<% } %>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
