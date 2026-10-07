@@ -78,11 +78,24 @@ class FileController {
   async downloadFile(req, res, next) {
     try {
       const { id } = req.params;
+      const { shareId } = req.query;
+      let share;
+
+      if (shareId) {
+        share = await prisma.shareLink.findUnique({
+          where: { id: shareId },
+        });
+      }
+
       const file = await prisma.file.findUnique({
         where: { id: id },
       });
 
-      if (file.userId !== req.user.id) {
+      if (file.userId !== req.user.id && !share) {
+        return res.redirect("/");
+      }
+
+      if (share.expiresAt < Date.now()) {
         return res.redirect("/");
       }
 

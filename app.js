@@ -8,8 +8,11 @@ import fileRouter from "./routers/file.router.js";
 import protectedRoute from "./middleware/protectedRoute.js";
 import folderRouter from "./routers/folder.router.js";
 import { prisma } from "./config/prisma.js";
+import shareController from "./controllers/share.controllers.js";
 
 const app = express();
+
+const sharecontroller = new shareController();
 
 app.use(session);
 app.use(morgan());
@@ -22,6 +25,7 @@ app.set("view engine", "ejs");
 app.use("", authRouter);
 app.use("/file", protectedRoute, fileRouter);
 app.use("/folder", protectedRoute, folderRouter);
+app.get("/share/:id", protectedRoute, sharecontroller.getShareLink);
 
 app.get("/", async (req, res, next) => {
   try {
