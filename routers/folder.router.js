@@ -10,5 +10,6 @@ folderRouter.get("/new", controller.getCreateFolderPage);
 folderRouter.post("/new", createFolderValidator, controller.createNewFolder);
 
 folderRouter.get("/:id", controller.getFolder);
+folderRouter.post("/:id/share", controller.shareFolder);
 
 export default folderRouter;

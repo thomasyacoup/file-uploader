@@ -13,6 +13,9 @@
   <button type="button">
     <a href="/file/new?folderId=<%= folder.id %>">upload file</a>
   </button>
+  <form action="/folder/<%= folder.id %>/share" method="post">
+    <input type="submit" value="Share">
+  </form>
   <ul>
     <% for (let file of folder.files) { %>
     <li>
@@ -20,6 +23,15 @@
       <a href="/file/<%= file.id %>">View</a>
     </li>
     <% } %>
+  </ul>
+
+  <ul>
+    Share Links
+    <% for (let link of folder.shareLinks) {%>
+      <li>
+        <a href="<%= req.headers.host+ '/share/' + link.id %>"><%= req.headers.host+ '/share/' + link.id %></a> (<%= link.expiresAt < Date.now() ? 'expired' : 'active for ' + Math.ceil((link.expiresAt - Date.now()) / 1000 / 60 / 60)  + 'H' %>)
+      </li>
+    <%}%>
   </ul>
 </body>
 </html>

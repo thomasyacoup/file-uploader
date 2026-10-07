@@ -25,11 +25,12 @@ app.use("/folder", protectedRoute, folderRouter);
 
 app.get("/", async (req, res, next) => {
   try {
-    [req.user.folders, req.user.files] = await Promise.all([
-      prisma.folder.findMany({ where: { userId: req.user.id } }),
-      prisma.file.findMany({ where: { userId: req.user.id, folder: null } }),
-    ]);
-
+    if (req.isAuthenticated()) {
+      [req.user.folders, req.user.files] = await Promise.all([
+        prisma.folder.findMany({ where: { userId: req.user.id } }),
+        prisma.file.findMany({ where: { userId: req.user.id, folder: null } }),
+      ]);
+    }
     res.render("index", { req });
   } catch (error) {
     next(error);
