@@ -6,7 +6,8 @@ Simple app for cloning Google Drive (practice).
 
 1. Install dependencies: `npm install`
 2. Configure environment variables in `.env` (e.g., `PORT`)
-3. Run: `npm start` (or `node app.js`)
+3. Run: `npx prisma migrate dev`
+4. Run: `npm start` (or `node app.js`)
 
 ## Usage
 
